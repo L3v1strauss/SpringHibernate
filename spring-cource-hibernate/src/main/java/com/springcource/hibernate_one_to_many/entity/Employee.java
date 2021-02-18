@@ -1,6 +1,9 @@
 package com.springcource.hibernate_one_to_many.entity;
 
+import lombok.ToString;
+
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "employees")
@@ -11,6 +14,7 @@ public class Employee {
     @Column(name="id")
     private int id;
 
+
     @Column(name="name")
     private String name;
 
@@ -20,7 +24,7 @@ public class Employee {
     @Column(name="salary")
     private int salary;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "department_id")
     private Department department;
 
@@ -80,7 +84,7 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", salary=" + salary +
-                ", department=" + department +
+                ", department=" + department.getDepartmentName() +
                 '}';
     }
 }

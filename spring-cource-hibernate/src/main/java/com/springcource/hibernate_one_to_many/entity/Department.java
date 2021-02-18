@@ -1,24 +1,24 @@
 package com.springcource.hibernate_one_to_many.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
+import net.bytebuddy.build.ToStringPlugin;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Table(name = "departments")
 public class Department {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
 
     @Column(name = "name")
     private String departmentName;
@@ -29,8 +29,9 @@ public class Department {
     @Column(name = "min_salary")
     private int minSalary;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH},
-            mappedBy = "department")
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "department",
+    fetch = FetchType.EAGER)
     private List<Employee> employeeList;
 
     public Department() {
@@ -95,8 +96,8 @@ public class Department {
         return "Department{" +
                 "id=" + id +
                 ", departmentName='" + departmentName + '\'' +
-                ", maxSalary='" + maxSalary + '\'' +
-                ", minSalary='" + minSalary + '\'' +
+                ", maxSalary=" + maxSalary +
+                ", minSalary=" + minSalary +
                 ", employeeList=" + employeeList +
                 '}';
     }
